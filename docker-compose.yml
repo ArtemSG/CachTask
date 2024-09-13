@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis-cache
+    ports:
+      - 6379:6379
+
+  postgres:
+    image: postgres:13
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: cacheapp
+    ports:
+      - 5432:5432
+
+  grafana:
+    image: grafana/grafana
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-redis-datasource
+    ports:
+      - "3000:3000"
